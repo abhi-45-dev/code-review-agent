@@ -1,0 +1,1 @@
+Developed a Python code review agent using RAG and LangGraph to analyze source files and generate structured JSON-based findings. The project includes design documentation, modular architecture, and Git-based version control.

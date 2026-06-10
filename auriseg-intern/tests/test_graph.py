@@ -1,9 +1,9 @@
 from src.agent.graph import graph
 
 initial_state = {
-    "input_path": "sample_buggy.py",
+    "input_path": "sample_msr.c",
     "files": [],
-    "current_file": "sample_buggy.py",
+    "current_file": "sample_msr.c",
     "code_chunk": "",
     "bug_results": [],
     "quality_results": [],

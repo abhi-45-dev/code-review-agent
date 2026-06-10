@@ -1,0 +1,9 @@
+Rule 1 [PEP 8 Naming Conventions]: Functions and variable names must use lowercase words separated by underscores (snake_case). Class names must use the PascalCase convention. Avoid using CamelCase for standalone functions.
+
+Rule 2 [Documentation]: Every function definition must include a clear docstring wrapped in triple quotes (""") explaining its parameters, return types, and any intentional structural behavior (such as recursion base cases) to maximize readability.
+
+Rule 3 [Mathematical & Input Safety]: Functions performing calculations or data transformations must validate input parameters explicitly at the very beginning of execution. Prevent crashes, runtime errors, or infinite loops by validating edge cases like negative values, empty lists, or null variables.
+
+Rule 4 [Exception Handling]: Avoid bare 'except:' clauses which swallow critical system errors. Always catch specific, explicit exceptions (e.g., ValueError, TypeError) and handle them gracefully.
+
+Rule 5 [Code Complexity & Layout]: Functions should stay modular and focus on a single task. Avoid compound multi-clause statements on a single line, use 4 spaces per indentation level, and eliminate unused library imports.

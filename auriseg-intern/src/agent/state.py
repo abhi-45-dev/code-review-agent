@@ -9,6 +9,7 @@ class AgentState(TypedDict):
     files: List[str]
     current_file: str
     code_chunk: str
+    code_chunks: List[str]
 
     # Current file results
     bug_results: List[dict]

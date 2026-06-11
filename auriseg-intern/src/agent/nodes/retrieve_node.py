@@ -20,11 +20,25 @@ def retrieve_node(state: AgentState):
     except UnicodeDecodeError:
         with open(file_path, "r", encoding="latin-1") as file:
             code_chunk = file.read()
-    if len(code_chunk) > 4000:
-        code_chunk = code_chunk[:4000]
-	
+
     print(f"Original size: {len(code_chunk)}")
 
+    docs = chunk_file_data(
+        {
+            "language": "c",
+            "full_content": code_chunk,
+            "filename": current_file,
+            "path": file_path
+        },
+        chunk_size=3000,
+        chunk_overlap=300
+    )
+
+    code_chunks = [doc.page_content for doc in docs]
+
+    print(f"Chunk count: {len(code_chunks)}")
+
     return {
-        "code_chunk": code_chunk
+        "code_chunk": code_chunk,
+        "code_chunks": code_chunks
     }

@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field
 from langchain_core.tools import tool
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
+
 load_dotenv()
 
 
@@ -87,14 +88,29 @@ For each suggestion provide:
 - reason
 - impact
 
-Impact must be one of:
-- Readability
-- Performance
-- Maintainability
-- Memory Efficiency
-- Concurrency
-- Security
-- Modernization
+IMPORTANT:
+
+impact MUST be EXACTLY one of the following values:
+
+Readability
+Performance
+Maintainability
+Memory Efficiency
+Concurrency
+Security
+Modernization
+
+Rules:
+- Choose EXACTLY ONE impact value.
+- Do NOT combine categories.
+- Do NOT invent categories.
+- Do NOT return phrases like:
+  - "Maintainability and scalability"
+  - "Security and Performance"
+  - "Readability & Maintainability"
+  - "Performance Optimization"
+
+Only use one of the seven allowed values listed above.
 
 Focus on practical and actionable improvements.
 

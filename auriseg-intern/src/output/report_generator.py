@@ -1,6 +1,5 @@
 from typing import Dict, List
 
-
 SEVERITY_ORDER = {
     "Critical": 0,
     "High": 1,
@@ -106,8 +105,10 @@ def generate_markdown_report(
     markdown += "## Findings\n\n"
 
     for finding in findings:
-        markdown += f"### [{finding.get('severity', 'Info')}] "
-        markdown += f"{finding.get('category', 'Unknown')}\n\n"
+        markdown += (
+            f"### [{finding.get('severity', 'Info')}] "
+            f"{finding.get('category', 'Unknown')}\n\n"
+        )
 
         if "issue" in finding:
             markdown += f"**Issue:** {finding['issue']}\n\n"
@@ -121,8 +122,17 @@ def generate_markdown_report(
         if "explanation" in finding:
             markdown += f"**Explanation:** {finding['explanation']}\n\n"
 
+        if "evidence" in finding:
+            markdown += "**Evidence:**\n\n"
+            markdown += "```text\n"
+            markdown += f"{finding['evidence']}\n"
+            markdown += "```\n\n"
+
         if "reason" in finding:
             markdown += f"**Reason:** {finding['reason']}\n\n"
+
+        if "impact" in finding:
+            markdown += f"**Impact:** {finding['impact']}\n\n"
 
         markdown += "---\n\n"
 

@@ -13,6 +13,7 @@ class BugReport(BaseModel):
     line_hint: str
     severity: Literal["Low", "Medium", "High", "Critical"]
     explanation: str
+    evidence: str
 
 
 class QualityReport(BaseModel):
@@ -20,6 +21,7 @@ class QualityReport(BaseModel):
     line_hint: str
     severity: Literal["Low", "Medium", "High", "Critical"]
     explanation: str
+    evidence: str
 
 
 class SecurityReport(BaseModel):
@@ -27,6 +29,7 @@ class SecurityReport(BaseModel):
     line_hint: str
     severity: Literal["Low", "Medium", "High", "Critical"]
     explanation: str
+    evidence: str
 
 
 class ImprovementSuggestion(BaseModel):
@@ -80,7 +83,21 @@ You are an expert software architect,
 security auditor,
 and senior code reviewer.
 
-Analyze the code and return:
+Analyze the provided code.
+
+IMPORTANT RULES:
+
+1. Report an issue ONLY if there is direct evidence in the provided code.
+2. Do NOT speculate about missing code.
+3. Do NOT assume implementation details.
+4. If evidence is insufficient, DO NOT report the issue.
+5. Every bug, quality issue, and security issue MUST include an evidence field.
+6. The evidence field MUST contain an exact code snippet copied from the provided code.
+7. Do not infer vulnerabilities solely from variable names such as:
+   password, passwd, token, auth, login, secret, key.
+8. Prefer returning fewer findings over uncertain findings.
+
+Return:
 
 1. bugs
 2. quality issues

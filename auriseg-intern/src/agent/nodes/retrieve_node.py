@@ -8,18 +8,46 @@ def retrieve_node(state: AgentState):
     input_path = state["input_path"]
     current_file = state["current_file"]
 
+    if not current_file:
+        print("[Error] No valid source files found.")
+        return {
+            "code_chunk": "",
+            "code_chunks": []
+        }
+
     if os.path.isdir(input_path):
         file_path = os.path.join(input_path, current_file)
     else:
         file_path = current_file
+
+    if not os.path.exists(file_path):
+        print(f"[Error] File not found: {file_path}")
+        return {
+            "code_chunk": "",
+            "code_chunks": []
+        }
 
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             code_chunk = file.read()
 
     except UnicodeDecodeError:
-        with open(file_path, "r", encoding="latin-1") as file:
-            code_chunk = file.read()
+        try:
+            with open(file_path, "r", encoding="latin-1") as file:
+                code_chunk = file.read()
+        except Exception as e:
+            print(f"[Error] Failed to read file: {e}")
+            return {
+                "code_chunk": "",
+                "code_chunks": []
+            }
+
+    except Exception as e:
+        print(f"[Error] Failed to read file: {e}")
+        return {
+            "code_chunk": "",
+            "code_chunks": []
+        }
 
     print(f"Original size: {len(code_chunk)}")
 

@@ -58,13 +58,19 @@ def retrieve_node(state: AgentState):
             "filename": current_file,
             "path": file_path
         },
-        chunk_size=3000,
-        chunk_overlap=300
+        chunk_size=4000,
+        chunk_overlap=150
     )
 
     code_chunks = [doc.page_content for doc in docs]
 
     print(f"Chunk count: {len(code_chunks)}")
+
+    for i, chunk in enumerate(code_chunks):
+   	 print(
+       	     f"Chunk {i+1}: "
+       	     f"{len(chunk)} characters"
+   	 )
 
     return {
         "code_chunk": code_chunk,

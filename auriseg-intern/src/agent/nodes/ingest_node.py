@@ -61,5 +61,7 @@ def ingest_node(state: AgentState):
 
     return {
         "files": files,
-	"current_file":files[0] if files else ""
+        "current_file_index": 0,
+        "current_file": files[0] if files else ""
     }
+

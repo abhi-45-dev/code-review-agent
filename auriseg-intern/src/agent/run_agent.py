@@ -6,6 +6,7 @@ def run_agent(input_path: str):
         "input_path": input_path,
         "files": [],
         "current_file": "",
+	"current_file_index": 0,
         "code_chunk": "",
         "code_chunks": [],
         "bug_results": [],

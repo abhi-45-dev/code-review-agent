@@ -8,6 +8,8 @@ class AgentState(TypedDict):
     # Repository ingestion
     files: List[str]
     current_file: str
+    current_file_index: int
+
     code_chunk: str
     code_chunks: List[str]
 
@@ -19,4 +21,3 @@ class AgentState(TypedDict):
 
     # Repository-wide reports
     reports: Dict[str, dict]
-

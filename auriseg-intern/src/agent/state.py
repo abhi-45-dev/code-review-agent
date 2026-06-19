@@ -4,6 +4,7 @@ from typing import Dict, List, TypedDict
 class AgentState(TypedDict):
     # User input
     input_path: str
+    review_type: str
 
     # Repository ingestion
     files: List[str]

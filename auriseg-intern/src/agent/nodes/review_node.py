@@ -5,13 +5,20 @@ from src.tools.code_reviewer import code_reviewer
 def review_node(state: AgentState):
     print(f"Review node chunks: {len(state['code_chunks'])}")
 
+    review_type = state.get(
+        "review_type",
+        "all"
+    )
+
     bug_results = []
     quality_results = []
     security_results = []
     improvement_results = []
 
     for i, chunk in enumerate(state["code_chunks"]):
-        print(f"Reviewing chunk {i + 1}/{len(state['code_chunks'])}")
+        print(
+            f"Reviewing chunk {i + 1}/{len(state['code_chunks'])}"
+        )
 
         result = code_reviewer.invoke(
             {
@@ -19,21 +26,24 @@ def review_node(state: AgentState):
             }
         )
 
-        bug_results.extend(
-            result.get("bugs", [])
-        )
+        if review_type in ["all", "bug"]:
+            bug_results.extend(
+                result.get("bugs", [])
+            )
 
-        quality_results.extend(
-            result.get("quality", [])
-        )
+        if review_type in ["all", "quality"]:
+            quality_results.extend(
+                result.get("quality", [])
+            )
 
-        security_results.extend(
-            result.get("security", [])
-        )
+            improvement_results.extend(
+                result.get("improvements", [])
+            )
 
-        improvement_results.extend(
-            result.get("improvements", [])
-        )
+        if review_type in ["all", "security"]:
+            security_results.extend(
+                result.get("security", [])
+            )
 
     return {
         "bug_results": bug_results,

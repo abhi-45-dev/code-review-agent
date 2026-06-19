@@ -1,12 +1,16 @@
 from src.agent.graph import graph
 
 
-def run_agent(input_path: str):
+def run_agent(
+    input_path: str,
+    review_type: str = "all"
+):
     initial_state = {
         "input_path": input_path,
+        "review_type": review_type,
         "files": [],
         "current_file": "",
-	"current_file_index": 0,
+        "current_file_index": 0,
         "code_chunk": "",
         "code_chunks": [],
         "bug_results": [],
@@ -22,10 +26,30 @@ def run_agent(input_path: str):
 
 
 if __name__ == "__main__":
-    path = input("Enter file or folder path: ").strip()
+    path = input(
+        "Enter file or folder path: "
+    ).strip()
 
-    reports = run_agent(path)
-    
+    review_type = input(
+        "Review type (all/bug/quality/security): "
+    ).strip().lower()
+
+    if review_type not in [
+        "all",
+        "bug",
+        "quality",
+        "security"
+    ]:
+        print(
+            "Invalid review type. "
+            "Defaulting to 'all'."
+        )
+        review_type = "all"
+
+    reports = run_agent(
+        path,
+        review_type
+    )
 
     print("\n" + "=" * 60)
     print("CODE REVIEW REPORT")
@@ -34,17 +58,42 @@ if __name__ == "__main__":
     for filename, report in reports.items():
         print(f"\nFILE: {filename}")
 
-        json_report = report.get("json_report", {})
-        summary = json_report.get("summary", {})
+        json_report = report.get(
+            "json_report",
+            {}
+        )
+
+        summary = json_report.get(
+            "summary",
+            {}
+        )
 
         print("\nSUMMARY")
         print("-" * 30)
-        print(f"Total Issues : {summary.get('total_issues', 0)}")
-        print(f"Critical     : {summary.get('critical_count', 0)}")
-        print(f"High         : {summary.get('high_count', 0)}")
-        print(f"Medium       : {summary.get('medium_count', 0)}")
-        print(f"Low          : {summary.get('low_count', 0)}")
-        print(f"Info         : {summary.get('info_count', 0)}")
+        print(
+            f"Total Issues : "
+            f"{summary.get('total_issues', 0)}"
+        )
+        print(
+            f"Critical     : "
+            f"{summary.get('critical_count', 0)}"
+        )
+        print(
+            f"High         : "
+            f"{summary.get('high_count', 0)}"
+        )
+        print(
+            f"Medium       : "
+            f"{summary.get('medium_count', 0)}"
+        )
+        print(
+            f"Low          : "
+            f"{summary.get('low_count', 0)}"
+        )
+        print(
+            f"Info         : "
+            f"{summary.get('info_count', 0)}"
+        )
 
         print("\nMARKDOWN REPORT PREVIEW")
         print("-" * 30)

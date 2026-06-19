@@ -2,7 +2,10 @@ import os
 import pytest
 import tempfile
 from pathlib import Path
-from ingestion.loader import process_input, load_file_data
+from src.ingestion.loader import (
+    process_input,
+    load_file_data
+)
 
 def test_process_single_file():
     with tempfile.TemporaryDirectory() as tmpdir:

@@ -8,10 +8,9 @@ SEVERITY_ORDER = {
     "Info": 4
 }
 
-
 def aggregate_findings(file_report: Dict) -> List[Dict]:
     findings = []
-
+    
     for finding in file_report.get("bug_results", []):
         item = dict(finding)
         item["category"] = "Bug"
@@ -45,7 +44,6 @@ def aggregate_findings(file_report: Dict) -> List[Dict]:
 
     return findings
 
-
 def build_summary(findings: List[Dict]) -> Dict:
     return {
         "total_issues": len(findings),
@@ -66,12 +64,10 @@ def build_summary(findings: List[Dict]) -> Dict:
         )
     }
 
-
 def generate_json_report(
     filename: str,
     file_report: Dict
 ) -> Dict:
-
     findings = aggregate_findings(file_report)
 
     return {
@@ -82,12 +78,10 @@ def generate_json_report(
         "findings": findings
     }
 
-
 def generate_markdown_report(
     filename: str,
     file_report: Dict
 ) -> str:
-
     findings = aggregate_findings(file_report)
     summary = build_summary(findings)
 
@@ -119,14 +113,35 @@ def generate_markdown_report(
         if "line_hint" in finding:
             markdown += f"**Location:** {finding['line_hint']}\n\n"
 
+        if "confidence" in finding:
+            markdown += f"**Confidence:** {finding['confidence']}\n\n"
+
+        if "cwe_id" in finding:
+            markdown += f"**CWE:** {finding['cwe_id']}\n\n"
+
+        if "owasp_category" in finding:
+            markdown += (
+                f"**OWASP Top 10:** "
+                f"{finding['owasp_category']}\n\n"
+            )
+
         if "explanation" in finding:
-            markdown += f"**Explanation:** {finding['explanation']}\n\n"
+            markdown += (
+                f"**Explanation:** "
+                f"{finding['explanation']}\n\n"
+            )
 
         if "evidence" in finding:
             markdown += "**Evidence:**\n\n"
             markdown += "```text\n"
             markdown += f"{finding['evidence']}\n"
             markdown += "```\n\n"
+
+        if "remediation" in finding:
+            markdown += (
+                f"**Remediation:** "
+                f"{finding['remediation']}\n\n"
+            )
 
         if "reason" in finding:
             markdown += f"**Reason:** {finding['reason']}\n\n"

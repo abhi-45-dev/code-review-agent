@@ -2,7 +2,10 @@
 import pytest
 import tempfile
 from langchain_core.documents import Document
-from vector_store.embedder import chunk_file_data, embed_and_store_in_chroma
+from src.vector_store.embedder import (
+    chunk_file_data,
+    embed_and_store_in_chroma
+)
 
 def test_chunk_file_data_python_boundaries():
     mock_payload = {

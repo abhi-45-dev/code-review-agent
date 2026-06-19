@@ -4,7 +4,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 from langchain_core.tools import tool
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_groq import ChatGroq
+from src.llm.factory import get_llm
 
 load_dotenv()
 
@@ -36,9 +36,29 @@ class QualityReport(BaseModel):
 class SecurityReport(BaseModel):
     issue: str
     line_hint: str
-    severity: Literal["Low", "Medium", "High", "Critical"]
+
+    severity: Literal[
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+    ]
+
+    confidence: Literal[
+        "Low",
+        "Medium",
+        "High"
+    ]
+
+    cwe_id: str
+
+    owasp_category: str
+
     explanation: str
+
     evidence: str
+
+    remediation: str
 
 
 class ImprovementSuggestion(BaseModel):
@@ -74,10 +94,7 @@ def code_reviewer(code_chunk: str) -> dict:
     improvement opportunities.
     """
 
-    llm = ChatGroq(
-        model="llama-3.3-70b-versatile",
-        temperature=0
-    )
+    llm = get_llm()
 
     structured_llm = llm.with_structured_output(
         ReviewResult

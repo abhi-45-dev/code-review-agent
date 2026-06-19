@@ -2,6 +2,8 @@ import inspect
 import json
 import sys
 from pathlib import Path
+import pandas as pd
+import plotly.express as px
 
 import streamlit as st
 from repo_handler import prepare_repository
@@ -131,6 +133,7 @@ if st.session_state.reports:
     low_count = 0
     info_count = 0
     owasp_counts = {}
+    cwe_counts = {}
 
     # Correctly indented single-pass loops to gather summary metrics
     for report in reports.values():
@@ -149,22 +152,98 @@ if st.session_state.reports:
             if owasp:
                 owasp_counts[owasp] = owasp_counts.get(owasp, 0) + 1
 
-    # Indented to live inside the report container block
+            cwe = finding.get("cwe_id")
+            if cwe:
+                cwe_counts[cwe] = cwe_counts.get(cwe, 0) + 1
+
+    # ==========================================
+    # DISTRIBUTION METRICS
+    # ==========================================
+
     st.subheader("🛡️ OWASP Top 10 Distribution")
 
     if owasp_counts:
-        for owasp, count in sorted(
-            owasp_counts.items(),
-            key=lambda x: x[1],
-            reverse=True
-        ):
-            st.write(
-                f"**{owasp}** — {count} finding(s)"
-            )
+        owasp_df = pd.DataFrame(
+            {
+                "OWASP": list(owasp_counts.keys()),
+                "Count": list(owasp_counts.values())
+            }
+        )
+
+        fig_owasp = px.bar(
+            owasp_df,
+            x="OWASP",
+            y="Count",
+            title="OWASP Findings Distribution"
+        )
+
+        st.plotly_chart(
+            fig_owasp,
+            use_container_width=True
+        )
 
     st.divider()
 
+    st.subheader("📚 CWE Distribution")
+
+    if cwe_counts:
+        cwe_df = pd.DataFrame(
+            {
+                "CWE": list(cwe_counts.keys()),
+                "Count": list(cwe_counts.values())
+            }
+        )
+
+        fig_cwe = px.bar(
+            cwe_df,
+            x="CWE",
+            y="Count",
+            title="CWE Findings Distribution"
+        )
+
+        st.plotly_chart(
+            fig_cwe,
+            use_container_width=True
+        )
+
+    st.divider()
+
+    # ==========================================
+    # OVERALL COUNTS
+    # ==========================================
+
     st.subheader("📈 Repository Summary")
+    
+    severity_df = pd.DataFrame(
+        {
+            "Severity": [
+                "Critical",
+                "High",
+                "Medium",
+                "Low",
+                "Info"
+            ],
+            "Count": [
+                critical_count,
+                high_count,
+                medium_count,
+                low_count,
+                info_count
+            ]
+        }
+    )
+
+    fig_severity = px.pie(
+        severity_df,
+        names="Severity",
+        values="Count",
+        title="Severity Distribution"
+    )
+
+    st.plotly_chart(
+        fig_severity,
+        use_container_width=True
+    )
 
     col1, col2, col3, col4, col5, col6 = st.columns(6)
 
@@ -182,6 +261,10 @@ if st.session_state.reports:
         st.metric("Info", info_count)
 
     st.divider()
+
+    # ==========================================
+    # DETAILED PER-FILE EXPANDERS
+    # ==========================================
 
     st.subheader("📊 Analysis Results")
     st.write(f"Files analyzed: {len(reports)}")
@@ -216,7 +299,7 @@ if st.session_state.reports:
                 severity_text = finding.get("severity", "Info")
                 location_text = finding.get("line_hint", "N/A")
                 explanation_text = finding.get("explanation", "")
-                
+
                 # New parameters from finding configuration definitions
                 confidence_text = finding.get("confidence", "")
                 cwe_text = finding.get("cwe_id", "")
@@ -242,14 +325,15 @@ if st.session_state.reports:
                         </div>
                     </div>
                 """)
-                
+
                 st.html(html_content)
 
     st.divider()
 
     # ==========================================
-    # EXPORT SECTION (UPDATED LAYOUT)
+    # EXPORT SECTION
     # ==========================================
+
     st.subheader("📄 Export Reports")
 
     report_json = json.dumps(

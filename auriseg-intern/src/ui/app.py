@@ -23,7 +23,13 @@ st.set_page_config(
 # LOAD CSS
 # ==========================================
 
-with open("src/ui/assets/styles.css") as f:
+CSS_PATH = (
+    Path(__file__).resolve().parent
+    / "assets"
+    / "styles.css"
+)
+
+with open(CSS_PATH) as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # ==========================================

@@ -93,13 +93,30 @@ else:
     uploaded_file = st.file_uploader("Upload ZIP repository", type=["zip"])
 
 # ==========================================
-# ZIP FLOW
+# FILE / ZIP PROCESSING FLOW
 # ==========================================
 
 if uploaded_file:
     st.success(f"Loaded: {uploaded_file.name}")
 
-    if input_type == "ZIP Repository":
+    # ==========================================
+    # SINGLE FILE FLOW
+    # ==========================================
+    if input_type == "Single File":
+        upload_dir = Path("uploads")
+        upload_dir.mkdir(exist_ok=True)
+
+        file_path = upload_dir / uploaded_file.name
+
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+
+        st.session_state.repo_path = str(upload_dir)
+
+    # ==========================================
+    # ZIP FLOW
+    # ==========================================
+    elif input_type == "ZIP Repository":
         if st.button("📦 Extract Repository", use_container_width=True):
             with st.spinner("Extracting repository..."):
                 repo_path = prepare_repository(uploaded_file)

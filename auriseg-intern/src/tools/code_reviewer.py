@@ -8,10 +8,12 @@ from src.llm.factory import get_llm
 
 load_dotenv()
 
-PROMPT_PATH = Path(
-    "src/prompts/code_review_prompt_v1.txt"
-)
 
+PROMPT_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "prompts"
+    / "code_review_prompt_v1.txt"
+)
 SYSTEM_PROMPT = PROMPT_PATH.read_text(
     encoding="utf-8"
 )

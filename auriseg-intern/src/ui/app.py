@@ -103,8 +103,11 @@ if uploaded_file:
     # SINGLE FILE FLOW
     # ==========================================
     if input_type == "Single File":
-        upload_dir = Path("uploads")
-        upload_dir.mkdir(exist_ok=True)
+        upload_dir=Path("uploads")
+        if upload_dir.exists():
+            import shutil
+            shutil.rmtree(upload_dir)
+        upload_dir.mkdir(exist_ok=True)    
 
         file_path = upload_dir / uploaded_file.name
 

@@ -175,8 +175,8 @@ if st.session_state.reports:
         info_count += summary.get("info_count", 0)
 
         findings = json_report.get("findings", [])
-        if findings:
-            st.write(findings[0])
+        
+            
         for finding in findings:
             owasp = finding.get("owasp_category")
             if owasp:

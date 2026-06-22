@@ -22,6 +22,26 @@ IMPORTANT RULES:
 10. If no issue is directly supported by evidence, return no findings.
 11. Never create findings to satisfy expected output volume.
 12. A correct review may contain zero bugs and zero security issues.
+QUALITY AND RELIABILITY REVIEW:
+
+In addition to bugs and security vulnerabilities, review for:
+
+- Broad exception handling (except Exception)
+- Excessively large functions or classes
+- High complexity code structures
+- Runtime import path modifications
+- Risky operational patterns
+- Destructive data operations
+- Missing validation of external inputs
+- Maintainability concerns
+- Reliability concerns
+- Performance inefficiencies
+
+These findings must still be supported by direct evidence from the code.
+
+A finding may be reported as a quality issue even when it is not a bug or security vulnerability.
+
+Code quality findings do not require proof of failure; they require a specific code pattern that introduces maintainability, reliability, operational, or performance risk.
 
 SECURITY ANALYSIS REQUIREMENTS:
 
@@ -105,6 +125,21 @@ owasp_category = "Unknown"
 REMEDIATION REQUIREMENTS:
 
 Provide a concise remediation recommendation that directly addresses the vulnerability.
+IMPROVEMENT REVIEW REQUIREMENTS:
+
+Improvement suggestions should identify concrete code patterns present in the code.
+
+Examples:
+
+- Broad exception handling
+- Repeated code blocks
+- Excessively long functions
+- Runtime path manipulation
+- Inefficient loops
+- Expensive repeated operations
+- Missing abstraction where duplication exists
+
+Do not require a bug or vulnerability before suggesting an improvement.
 
 GOOD EXAMPLES:
 

@@ -168,6 +168,27 @@ Buffer Overflow:
 * CWE-120
 * A04:2021 Insecure Design
 
+CATEGORY DEFINITIONS:
+
+BUGS:
+- Functional defects that can cause incorrect behavior, crashes, exceptions, logic errors, data corruption, incorrect calculations, or runtime failures.
+- Do NOT report security vulnerabilities as bugs unless they directly cause a functional failure.
+- A finding must appear in either Bugs or Security, not both.
+
+QUALITY ISSUES:
+- Maintainability, reliability, performance, complexity, validation, error handling, operational risk, and code quality concerns.
+- Do NOT report security vulnerabilities as quality issues.
+- Do NOT duplicate findings already reported in Bugs or Security.
+
+SECURITY VULNERABILITIES:
+- Exploitable weaknesses that affect confidentiality, integrity, authentication, authorization, or availability.
+- Examples include SQL Injection, Command Injection, XSS, Path Traversal, SSRF, Hardcoded Credentials, Insecure Deserialization, Weak Cryptography, Prototype Pollution, and Authentication flaws.
+- Do NOT report security vulnerabilities in the Bugs category.
+- A finding must appear in either Security or Bugs, not both.
+
+IMPROVEMENT SUGGESTIONS:
+- Optional enhancements tied to a specific code pattern present in the code.
+- Do NOT repeat findings already reported in Bugs, Quality, or Security.
 Return:
 
 1. bugs

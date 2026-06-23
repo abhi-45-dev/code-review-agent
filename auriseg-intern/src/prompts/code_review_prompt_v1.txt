@@ -179,6 +179,39 @@ QUALITY ISSUES:
 - Maintainability, reliability, performance, complexity, validation, error handling, operational risk, and code quality concerns.
 - Do NOT report security vulnerabilities as quality issues.
 - Do NOT duplicate findings already reported in Bugs or Security.
+QUALITY ISSUE RESTRICTIONS:
+
+Do NOT report security vulnerabilities as quality issues.
+
+The following MUST be reported only as Security Vulnerabilities:
+
+- SQL Injection
+- Command Injection
+- XSS
+- Path Traversal
+- SSRF
+- Hardcoded Credentials
+- Weak Cryptography
+- Insecure Deserialization
+- Prototype Pollution
+- Authentication flaws
+- Authorization flaws
+- Sensitive data exposure
+
+If a finding belongs to the Security category,
+do NOT repeat it in Quality Issues.
+
+Quality Issues should focus on:
+
+- Maintainability
+- Reliability
+- Complexity
+- Performance
+- Resource usage
+- Validation issues
+- Error handling issues with direct evidence
+
+Do not create a Quality finding that is merely a restatement of a Security finding.
 
 SECURITY VULNERABILITIES:
 - Exploitable weaknesses that affect confidentiality, integrity, authentication, authorization, or availability.

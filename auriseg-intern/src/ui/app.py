@@ -324,11 +324,18 @@ if st.session_state.reports:
                 severity = finding.get("severity", "Info").lower()
 
                 # 1. Strip out nested/accidental code lines coming from finding text elements
-                issue_title = finding.get("issue", "Finding")
                 category_text = finding.get("category", "N/A")
-                severity_text = finding.get("severity", "Info")
-                location_text = finding.get("line_hint", "N/A")
-                explanation_text = finding.get("explanation", "")
+
+                if category_text == "Improvement":
+                    issue_title = finding.get("suggestion", "Improvement")
+                    severity_text = "Info"
+                    location_text = finding.get("current_pattern", "N/A")
+                    explanation_text = finding.get("reason", "")
+                else:
+                    issue_title = finding.get("issue", "Finding")
+                    severity_text = finding.get("severity", "Info")
+                    location_text = finding.get("line_hint", "N/A")
+                    explanation_text = finding.get("explanation", "")
 
                 # New parameters from finding configuration definitions
                 confidence_text = finding.get("confidence", "")

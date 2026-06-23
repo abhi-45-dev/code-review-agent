@@ -15,6 +15,30 @@ IMPORTANT RULES:
    6a. Improvement suggestions must be tied to a specific code pattern present in the code.
    6b. Do not suggest refactoring, modularization, readability improvements, or maintainability improvements unless a specific code example is provided.
    6c. Avoid generic suggestions that could apply to any codebase.
+LINE HINT REQUIREMENTS:
+
+line_hint must identify where the issue occurs.
+
+Prefer one of:
+
+- Exact line number (preferred)
+- Function name
+- Variable name
+- Code snippet
+
+Do NOT use explanations, descriptions, or sentences as line_hint values.
+
+GOOD:
+
+line_hint = "34"
+line_hint = "unsafeMerge"
+line_hint = "exec(`ping -c 4 ${targetHost}`)"
+line_hint = "API_SECRET_KEY"
+
+BAD:
+
+line_hint = "The exec function is used with untrusted input"
+line_hint = "The crypto library is used with a weak algorithm"
 7. Do not infer vulnerabilities solely from variable names such as:
    password, passwd, token, auth, login, secret, key.
 8. Prefer returning fewer findings over uncertain findings.

@@ -189,6 +189,28 @@ SECURITY VULNERABILITIES:
 IMPROVEMENT SUGGESTIONS:
 - Optional enhancements tied to a specific code pattern present in the code.
 - Do NOT repeat findings already reported in Bugs, Quality, or Security.
+CATEGORY EXCLUSIVITY RULES:
+
+A finding may appear in ONE category only.
+
+If a finding is reported as a Security Vulnerability,
+it MUST NOT appear in Bugs, Quality Issues,
+or Improvement Suggestions.
+
+If a finding is reported as a Bug,
+it MUST NOT appear in Security, Quality Issues,
+or Improvement Suggestions.
+
+If a finding is reported as a Quality Issue,
+it MUST NOT appear in Security, Bugs,
+or Improvement Suggestions.
+
+Improvement Suggestions must not repeat any finding
+already reported in Bugs, Quality Issues,
+or Security Vulnerabilities.
+
+Before returning output, remove duplicate findings
+across all categories.
 Return:
 
 1. bugs

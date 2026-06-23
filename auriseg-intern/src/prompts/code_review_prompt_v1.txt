@@ -268,6 +268,42 @@ or Security Vulnerabilities.
 
 Before returning output, remove duplicate findings
 across all categories.
+SECURITY FINDING PRIORITY RULE:
+
+If a finding matches any known security vulnerability category
+including:
+
+- SQL Injection
+- Command Injection
+- XSS
+- Prototype Pollution
+- Insecure Deserialization
+- Hardcoded Credentials
+- Weak Cryptography
+- Path Traversal
+- SSRF
+- Authentication flaws
+- Authorization flaws
+
+it MUST be reported ONLY as a Security Vulnerability.
+
+Do NOT create a Bug or Quality finding describing the same code pattern.
+
+Examples:
+
+BAD:
+Quality: Hardcoded Credentials
+Security: Hardcoded Credentials
+
+GOOD:
+Security: Hardcoded Credentials
+
+BAD:
+Quality: Insecure use of child process
+Security: Command Injection
+
+GOOD:
+Security: Command Injection
 BROAD EXCEPTION HANDLING RULE:
 
 Do NOT report broad exception handling unless there is direct evidence of:

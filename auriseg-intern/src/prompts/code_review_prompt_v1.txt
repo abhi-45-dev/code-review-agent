@@ -211,6 +211,27 @@ or Security Vulnerabilities.
 
 Before returning output, remove duplicate findings
 across all categories.
+BROAD EXCEPTION HANDLING RULE:
+
+Do NOT report broad exception handling unless there is direct evidence of:
+
+- catch(Exception)
+- catch(error)
+- catch(e)
+- except Exception
+- except:
+- equivalent language-specific constructs that catch all exceptions
+
+Returning an error response such as:
+
+- if (err)
+- return error
+- res.status(...)
+- logging an error
+
+is NOT broad exception handling.
+
+If no catch-all exception handler exists in the provided code, do NOT report broad exception handling.
 Return:
 
 1. bugs

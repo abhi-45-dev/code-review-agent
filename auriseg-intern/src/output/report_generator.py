@@ -10,7 +10,6 @@ SEVERITY_ORDER = {
 
 def aggregate_findings(file_report: Dict) -> List[Dict]:
     findings = []
-    
     for finding in file_report.get("bug_results", []):
         item = dict(finding)
         item["category"] = "Bug"
@@ -34,6 +33,32 @@ def aggregate_findings(file_report: Dict) -> List[Dict]:
 
         item["category"] = "Improvement"
         findings.append(item)
+
+    # ==========================================
+    # DEDUPLICATE SECURITY FINDINGS
+    # ==========================================
+
+    security_issues = {
+        finding.get("issue", "").lower().strip()
+        for finding in findings
+        if finding.get("category") == "Security"
+    }
+
+    filtered_findings = []
+
+    for finding in findings:
+        issue = finding.get("issue", "").lower().strip()
+        category = finding.get("category")
+
+        if (
+            category in ["Bug", "Quality"]
+            and issue in security_issues
+        ):
+            continue
+
+        filtered_findings.append(finding)
+
+    findings = filtered_findings
 
     findings.sort(
         key=lambda x: SEVERITY_ORDER.get(
@@ -69,7 +94,6 @@ def generate_json_report(
     file_report: Dict
 ) -> Dict:
     findings = aggregate_findings(file_report)
-
     return {
         "file_meta": {
             "filename": filename
@@ -84,7 +108,6 @@ def generate_markdown_report(
 ) -> str:
     findings = aggregate_findings(file_report)
     summary = build_summary(findings)
-
     markdown = f"# Code Review Report\n\n"
     markdown += f"## File: {filename}\n\n"
 

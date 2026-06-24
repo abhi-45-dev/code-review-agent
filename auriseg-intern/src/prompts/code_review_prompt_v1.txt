@@ -32,7 +32,7 @@ GOOD:
 
 line_hint = "34"
 line_hint = "unsafeMerge"
-line_hint = "exec(`ping -c 4 ${targetHost}`)"
+line_hint = "exec(`ping -c 4 ${{targetHost}}`)"
 line_hint = "API_SECRET_KEY"
 
 BAD:

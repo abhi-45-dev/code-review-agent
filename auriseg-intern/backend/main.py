@@ -28,7 +28,7 @@ def review_repo(request: ReviewRequest):
 
         return {
             "success": True,
-            "files_analyzed": len(reports)
+            "reports":reports
         }
 
     except Exception as e:

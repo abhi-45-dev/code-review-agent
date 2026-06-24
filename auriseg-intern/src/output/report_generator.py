@@ -44,6 +44,7 @@ def aggregate_findings(file_report: Dict) -> List[Dict]:
         if finding.get("category") == "Security"
     }
 
+    print(f"before dedupe:{len(findings)}")
     filtered_findings = []
 
     for finding in findings:
@@ -59,6 +60,7 @@ def aggregate_findings(file_report: Dict) -> List[Dict]:
         filtered_findings.append(finding)
 
     findings = filtered_findings
+    print(f"After dedupe:len{len(findings)}")
 
     findings.sort(
         key=lambda x: SEVERITY_ORDER.get(
